@@ -64,6 +64,9 @@ jobs:
       - name: Run Tests
         run: mvn test -Dspring.profiles.active=ci
 
+      - name: List target directory
+        run: ls -al target
+
   docker-build-and-push:
     runs-on: ubuntu-latest
     needs: build-and-test
@@ -71,6 +74,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: List target directory
+        run: ls -al target
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
