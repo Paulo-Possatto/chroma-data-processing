@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  chroma-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/chroma_db?currentSchema=report
+      SPRING_DATASOURCE_USERNAME: chroma_user
+      SPRING_DATASOURCE_PASSWORD: chroma_pass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+
+  postgres:
+    image: postgres:15
+    container_name: postgres_container
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: chroma_user
+      POSTGRES_PASSWORD: chroma_pass
+      POSTGRES_DB: chroma_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql-scripts/query.sql:/docker-entrypoint-initdb.d/query.sql
+
+volumes:
+  postgres_data:
