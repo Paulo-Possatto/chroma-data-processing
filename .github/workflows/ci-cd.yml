@@ -43,11 +43,20 @@ jobs:
             sleep 5
           done
 
+      - name: Create Schema in PostgreSQL
+        run: |
+          until pg_isready -h localhost -p 5433 -U chroma_user; do
+            echo "Waiting for PostgreSQL to be ready..."
+            sleep 5
+          done
+          PGPASSWORD=chroma_pass psql -h localhost -p 5433 -U chroma_user -d chroma_db -c "CREATE SCHEMA IF NOT EXISTS report;"
+
       - name: Setup application.properties for CI
         run: |
-          echo "spring.datasource.url=jdbc:postgresql://localhost:5433/chroma_db?currentSchema=report" >> src/main/resources/application-ci.properties
+          echo "spring.datasource.url=jdbc:postgresql://localhost:5433/chroma_db" >> src/main/resources/application-ci.properties
           echo "spring.datasource.username=chroma_user" >> src/main/resources/application-ci.properties
           echo "spring.datasource.password=chroma_pass" >> src/main/resources/application-ci.properties
+          echo "spring.jpa.properties.hibernate.default_schema=report" >> src/main/resources/application-ci.properties
 
       - name: Build with Maven
         run: mvn clean package -DskipTests
