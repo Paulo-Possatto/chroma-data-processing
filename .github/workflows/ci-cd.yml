@@ -64,8 +64,11 @@ jobs:
       - name: Run Tests
         run: mvn test -Dspring.profiles.active=ci
 
-      - name: List target directory
-        run: ls -al target
+      - name: Upload JAR as an artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: analysis-jar
+          path: target/analysis-0.0.1-SNAPSHOT.jar
 
   docker-build-and-push:
     runs-on: ubuntu-latest
@@ -75,8 +78,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: List target directory
-        run: ls -al target
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: analysis-jar
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
