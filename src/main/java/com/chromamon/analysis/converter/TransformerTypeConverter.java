@@ -79,4 +79,40 @@ public class TransformerTypeConverter implements AttributeConverter<TransformerT
             default -> throw new IllegalArgumentException(integer + " not supported");
         }
     }
+
+    public static TransformerTypeEnum convertTypeIntToEnum(Integer integer) {
+        if(integer == null){
+            return null;
+        }
+        switch (integer){
+            case 0 ->{
+                return TransformerTypeEnum.STEP_UP;
+            }
+            case 1 ->{
+                return TransformerTypeEnum.STEP_DOWN;
+            }
+            case 2 ->{
+                return TransformerTypeEnum.AUTO_TRANSFORMER;
+            }
+            case 3 ->{
+                return TransformerTypeEnum.POWER_TRANSFORMER;
+            }
+            case 4 ->{
+                return TransformerTypeEnum.GROUND_TRANSFORMER;
+            }
+            case 5 ->{
+                return TransformerTypeEnum.ISOLATING_TRANSFORMER;
+            }
+            case 6 ->{
+                return TransformerTypeEnum.REGULATION_TRANSFORMER;
+            }
+            case 7 ->{
+                return TransformerTypeEnum.DISTRIBUTION_TRANSFORMER;
+            }
+            case 8 ->{
+                return TransformerTypeEnum.PHASE_ADJUSTING_TRANSFORMER;
+            }
+            default -> throw new IllegalArgumentException(integer + " not supported");
+        }
+    }
 }

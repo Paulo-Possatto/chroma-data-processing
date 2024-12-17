@@ -49,4 +49,25 @@ public class AnalysisMethodConverter implements AttributeConverter<AnalysisMetho
             default -> throw new IllegalArgumentException(integer + " not supported");
         }
     }
+
+    public static AnalysisMethodEnum convertAnalysisFromIntToEnum(Integer integer) {
+        if(integer == null){
+            return null;
+        }
+        switch (integer){
+            case 0 -> {
+                return AnalysisMethodEnum.ROGERS;
+            }
+            case 1 -> {
+                return AnalysisMethodEnum.IEEE;
+            }
+            case 2 -> {
+                return AnalysisMethodEnum.DUVAL;
+            }
+            case 3 -> {
+                return AnalysisMethodEnum.KGA;
+            }
+            default -> throw new IllegalArgumentException(integer + " not supported");
+        }
+    }
 }

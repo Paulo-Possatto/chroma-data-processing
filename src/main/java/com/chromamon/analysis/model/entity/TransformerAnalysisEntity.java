@@ -3,15 +3,17 @@ package com.chromamon.analysis.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
 @AllArgsConstructor
-@Table(name = "transformer_analysis")
 @Builder
+@Table(name = "transformer_analysis")
 public class TransformerAnalysisEntity {
 
     @Id
@@ -19,8 +21,11 @@ public class TransformerAnalysisEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "transformer_id", nullable = false)
+    @JoinColumn(name = "transformer_id", referencedColumnName = "transformer_id", nullable = false)
     private TransformerDataEntity transformerData;
+
+    @OneToMany(mappedBy = "transformerAnalysis", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TransformerResultEntity> transformerResultList = new ArrayList<>();
 
     @Column(name = "analysis_timestamp", nullable = false)
     private Date analysisTimestamp;
@@ -54,4 +59,8 @@ public class TransformerAnalysisEntity {
 
     @Column(name = "oil_pressure", nullable = false)
     private Double oilPressure;
+
+    @Column(name = "analysis_identifier", nullable = false, unique = true)
+    private String analysisIdentifier;
 }
+

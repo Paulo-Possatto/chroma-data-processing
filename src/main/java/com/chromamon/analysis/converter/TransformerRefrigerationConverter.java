@@ -61,4 +61,31 @@ public class TransformerRefrigerationConverter implements AttributeConverter<Tra
             default -> throw new IllegalArgumentException(integer + "not supported");
         }
     }
+
+    public static TransformerRefrigerationTypeEnum convertRefrigerationIntToEnum(Integer integer) {
+        if(integer == null){
+            return null;
+        }
+        switch (integer){
+            case 0 -> {
+                return TransformerRefrigerationTypeEnum.AIR_FORCE;
+            }
+            case 1 -> {
+                return TransformerRefrigerationTypeEnum.AIR_NATURAL;
+            }
+            case 2 -> {
+                return TransformerRefrigerationTypeEnum.OIL_FORCED_AIR_FORCED;
+            }
+            case 3 -> {
+                return TransformerRefrigerationTypeEnum.OIL_FORCED_AIR_NATURAL;
+            }
+            case 4 -> {
+                return TransformerRefrigerationTypeEnum.OIL_NATURAL_AIR_FORCED;
+            }
+            case 5 -> {
+                return TransformerRefrigerationTypeEnum.OIL_NATURAL_AIR_NATURAL;
+            }
+            default -> throw new IllegalArgumentException(integer + "not supported");
+        }
+    }
 }

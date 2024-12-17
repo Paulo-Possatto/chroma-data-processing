@@ -2,7 +2,7 @@ spring:
   application:
     name: chromamon-data-process
   datasource:
-    url: jdbc:postgresql://postgres:5433/chroma_db?currentSchema=report
+    url: jdbc:postgresql://localhost:5433/chroma_db?currentSchema=report
     username: chroma_user
     password: chroma_pass
     driver-class-name: org.postgresql.Driver
@@ -17,3 +17,24 @@ spring:
       hibernate:
         default_schema: report
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        prefetch: 1
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 5
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/
+      database: report
+
+server:
+  port: 8081

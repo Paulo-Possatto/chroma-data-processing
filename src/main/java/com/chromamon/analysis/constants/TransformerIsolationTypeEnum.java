@@ -1,5 +1,5 @@
 package com.chromamon.analysis.constants;
 
-public enum TransformerIsolationType {
+public enum TransformerIsolationTypeEnum {
     MINERAL_OIL, VEGETABLE_OIL, SOLID
 }

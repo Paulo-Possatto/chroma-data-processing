@@ -1,9 +1,11 @@
 package com.chromamon.analysis.controller;
 
 import com.chromamon.analysis.model.dto.TransformerDataDTO;
+import com.chromamon.analysis.model.request.RequestReport;
 import com.chromamon.analysis.model.request.RequestTransformersByStatus;
 import com.chromamon.analysis.model.request.RequestUpdateTransformerStatus;
 import com.chromamon.analysis.model.response.ApiResponse;
+import com.chromamon.analysis.service.SaveReportService;
 import com.chromamon.analysis.service.TransformerAnalysisService;
 import com.chromamon.analysis.service.TransformerDataService;
 import jakarta.validation.Valid;
@@ -25,6 +27,9 @@ public class ProcessController {
 
     @Autowired
     private TransformerAnalysisService transformerAnalysisService;
+
+    @Autowired
+    private SaveReportService saveReportService;
 
     @PostMapping(value = "/add-data", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<TransformerDataDTO>> addTransformerData(@RequestBody @Valid TransformerDataDTO transformerDataDTO){
@@ -58,5 +63,14 @@ public class ProcessController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(responses);
+    }
+
+    @PostMapping(value = "/report/generate-report", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse<String>> generateReport(@Valid @RequestBody RequestReport request){
+        saveReportService.getTransformerDataForReport(request);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ApiResponse<>("Report requested", "Generating report for Transformer " +
+                        request.getTransformerId() + " between " + request.getStartDate() + " and " + request.getEndDate()));
     }
 }

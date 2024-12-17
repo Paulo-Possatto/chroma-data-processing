@@ -4,6 +4,7 @@ import com.chromamon.analysis.constants.AnalysisMethodEnum;
 import com.chromamon.analysis.converter.AnalysisMethodConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 @Table(name = "transformer_results")
 public class TransformerResultEntity {
 
@@ -21,8 +23,8 @@ public class TransformerResultEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "transformer_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "analysis_identifier", referencedColumnName = "analysis_identifier", nullable = false)
     private TransformerAnalysisEntity transformerAnalysis;
 
     @Column(name = "analysis_method", nullable = false)
@@ -32,7 +34,8 @@ public class TransformerResultEntity {
     @Column(name = "analysis_result", nullable = false)
     private String analysisResult;
 
-    @Column(name = "result_identification", nullable = false)
+    @Column(name = "result_identification", nullable = false, unique = true)
     @UuidGenerator
     private UUID resultIdentification;
 }
+

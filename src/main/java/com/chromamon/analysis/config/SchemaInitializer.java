@@ -2,6 +2,7 @@ package com.chromamon.analysis.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.Statement;

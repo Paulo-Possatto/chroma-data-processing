@@ -1,6 +1,9 @@
 package com.chromamon.analysis.service;
 
-import com.chromamon.analysis.constants.*;
+import com.chromamon.analysis.constants.PatternConstants;
+import com.chromamon.analysis.constants.TransformerIsolationTypeEnum;
+import com.chromamon.analysis.constants.TransformerPhaseEnum;
+import com.chromamon.analysis.constants.TransformerRefrigerationTypeEnum;
 import com.chromamon.analysis.exception.*;
 import com.chromamon.analysis.mapper.TransformerDataMapper;
 import com.chromamon.analysis.model.dto.TransformerDataDTO;
@@ -49,7 +52,7 @@ public class TransformerDataService{
                 throw new TransformerDateNotLogicalException("The transformer maintenance date must not be before the transformer installation date");
             }
 
-            if(transformerDataDTO.getIsolationType().equals(TransformerIsolationType.SOLID)){
+            if(transformerDataDTO.getIsolationType().equals(TransformerIsolationTypeEnum.SOLID)){
                 if(!transformerDataDTO.getRefrigerationType().equals(TransformerRefrigerationTypeEnum.AIR_FORCE) &&
                         !transformerDataDTO.getRefrigerationType().equals(TransformerRefrigerationTypeEnum.AIR_NATURAL)){
                     throw new TransformerIsolationRefrigerationException("Transformers that has Oil as an isolation type, must have Oil-related refrigeration type");
@@ -95,6 +98,7 @@ public class TransformerDataService{
         return TransformerDataMapper.toDTO(updatedTransformer);
     }
 
+    //TODO: Use Paginator
     public List<TransformerDataDTO> findTransformersByStatus(RequestTransformersByStatus status){
         List<TransformerDataDTO> results = transformerDataRepository.findTransformerByStatus(status.getStatus()).stream()
                 .map(TransformerDataMapper::toDTO)

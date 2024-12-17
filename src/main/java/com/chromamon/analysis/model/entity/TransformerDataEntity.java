@@ -3,7 +3,13 @@ package com.chromamon.analysis.model.entity;
 import com.chromamon.analysis.constants.*;
 import com.chromamon.analysis.converter.*;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -17,8 +23,11 @@ public class TransformerDataEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "transformer_id", nullable = false)
+    @Column(name = "transformer_id", nullable = false, unique = true)
     private String transformerId;
+
+    @OneToMany(mappedBy = "transformerData", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<TransformerAnalysisEntity> transformerAnalysisList = new HashSet<>();
 
     @Column(name = "transformer_name", nullable = false)
     private String transformerName;
@@ -84,8 +93,9 @@ public class TransformerDataEntity {
 
     @Column(name = "isolation_type", nullable = false)
     @Convert(converter = TransformerIsolationTypeConverter.class)
-    private TransformerIsolationType isolationType;
+    private TransformerIsolationTypeEnum isolationType;
 
     @Column(name = "actual_load", nullable = false)
     private Integer actualLoad;
 }
+

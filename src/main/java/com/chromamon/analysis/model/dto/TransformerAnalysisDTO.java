@@ -75,4 +75,8 @@ public class TransformerAnalysisDTO {
     @NotNull(message = "Oil pressure is required.")
     @DecimalMin(value = "0.0", message = "Oil pressure must be non-negative.")
     private Double oilPressure;
+
+    @NotNull(message = "The analysis identifier is required")
+    @NotBlank(message = "Analysis identifier cannot be empty")
+    private String analysisIdentifier;
 }

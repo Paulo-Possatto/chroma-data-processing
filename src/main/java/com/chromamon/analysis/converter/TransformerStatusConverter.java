@@ -43,4 +43,21 @@ public class TransformerStatusConverter implements AttributeConverter<Transforme
             default -> throw new IllegalArgumentException(value + " not supported");
         }
     }
+
+    public static TransformerStatusEnum convertStatusIntToEnum(Integer value) {
+        if(value == null) {
+            return null;
+        } switch (value){
+            case 0 -> {
+                return TransformerStatusEnum.NOT_OPERATING;
+            }
+            case 1 -> {
+                return TransformerStatusEnum.IN_MAINTENANCE;
+            }
+            case 2 -> {
+                return TransformerStatusEnum.OPERATING;
+            }
+            default -> throw new IllegalArgumentException(value + " not supported");
+        }
+    }
 }

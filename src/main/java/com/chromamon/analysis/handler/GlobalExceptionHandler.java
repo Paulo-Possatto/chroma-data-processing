@@ -67,4 +67,12 @@ public class GlobalExceptionHandler {
         response.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+
+    @ExceptionHandler(TransformerIdsNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleTransformerIdsNotFoundException(TransformerIdsNotFoundException ex){
+        Map<String, Object> response = new HashMap<>();
+        response.put("warning", "Transformer Data not found in Database");
+        response.put("ids", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
 }

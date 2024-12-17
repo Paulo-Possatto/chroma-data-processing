@@ -43,4 +43,22 @@ public class TransformerPhaseConverter implements AttributeConverter<Transformer
             default -> throw new IllegalArgumentException(integer + " not supported");
         }
     }
+
+    public static TransformerPhaseEnum convertPhaseIntToEnum(Integer integer) {
+        if(integer == null){
+            return null;
+        }
+        switch (integer){
+            case 0 -> {
+                return TransformerPhaseEnum.SINGLE_PHASE;
+            }
+            case 1 -> {
+                return TransformerPhaseEnum.THREE_PHASE;
+            }
+            case 2 -> {
+                return TransformerPhaseEnum.MULTIPHASE;
+            }
+            default -> throw new IllegalArgumentException(integer + " not supported");
+        }
+    }
 }

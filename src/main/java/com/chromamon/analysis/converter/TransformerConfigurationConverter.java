@@ -49,4 +49,25 @@ public class TransformerConfigurationConverter implements AttributeConverter<Tra
             default -> throw new IllegalArgumentException(integer + " not supported");
         }
     }
+
+    public static TransformerConfigurationEnum convertConfigurationIntToEnum(Integer integer) {
+        if(integer == null){
+            return null;
+        }
+        switch (integer){
+            case 0 -> {
+                return TransformerConfigurationEnum.STAR_STAR;
+            }
+            case 1 -> {
+                return TransformerConfigurationEnum.DELTA_STAR;
+            }
+            case 2 -> {
+                return TransformerConfigurationEnum.STAR_DELTA;
+            }
+            case 3 -> {
+                return TransformerConfigurationEnum.DELTA_DELTA;
+            }
+            default -> throw new IllegalArgumentException(integer + " not supported");
+        }
+    }
 }

@@ -2,8 +2,12 @@ package com.chromamon.analysis.model.dto;
 
 import com.chromamon.analysis.constants.*;
 import com.chromamon.analysis.validator.DateFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TransformerDataDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -104,7 +109,7 @@ public class TransformerDataDTO {
     private TransformerRefrigerationTypeEnum refrigerationType;
 
     @NotNull(message = "The transformer isolation type is required")
-    private TransformerIsolationType isolationType;
+    private TransformerIsolationTypeEnum isolationType;
 
     @Positive(message = "The actual load must be a positive value")
     @NotNull(message = "The actual load is required")
